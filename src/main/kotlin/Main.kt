@@ -2,123 +2,88 @@ package ru.ivan_shilin.compiler.lab1
 
 import java.io.File
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
-    val fileName = "example1.txt"
+    val fileName = "example4.txt"
     var state = 'N'
 
-    File(fileName)
-        .forEachLine { line ->
-            line.forEach { symbol ->
-                when (state) {
-                    'N' -> {
-                        when (symbol) {
-                            'l' -> {
-                                state = 'W'
+    outer@ for (line in File(fileName).readLines()) {
+        for ((i, symbol) in line.withIndex()) {
+            when (state) {
+                'N' -> {
+                    when (symbol) {
+                        'l' -> state = 'W'
+                        'r' -> state = 'E'
+                        'f' -> println("MoveNorth ⬆️")
+                        Char(9500) -> {
+                            println("⛔️ Конец программы ⛔️")
+                            if (i < line.lastIndex) {
+                                println("⚠️ Предупреждение: после символа конца строки есть лишние символы! ⚠️")
                             }
-
-                            'r' -> {
-                                state = 'E'
-                            }
-
-                            'f' -> {
-                                println("MoveNorth")
-                            }
-
-                            Char(9500) -> {
-                                println("КОНЕЦ ПРОГРАММЫ!!!!!!!!")
-                                return@forEachLine
-                            }
-
-                            else -> {
-                                println("ВХОДНОЙ СИМВОЛ НЕ НРАВИТСЯ!!!!")
-                                return@forEachLine
-                            }
+                            return
+                        }
+                        else -> {
+                            println("⚠️ Входной символ вне словаря ⚠️")
+                            return
                         }
                     }
-
-                    'W' -> {
-                        when (symbol) {
-                            'l' -> {
-                                state = 'S'
+                }
+                'W' -> {
+                    when (symbol) {
+                        'l' -> state = 'S'
+                        'r' -> state = 'N'
+                        'f' -> println("MoveWest ⬅️")
+                        Char(9500) -> {
+                            println("⛔️ Конец программы ⛔️")
+                            if (i < line.lastIndex) {
+                                println("⚠️ Предупреждение: после символа конца строки есть лишние символы! ⚠️")
                             }
-
-                            'r' -> {
-                                state = 'N'
-                            }
-
-                            'f' -> {
-                                println("MoveWest")
-                            }
-
-                            Char(9500) -> {
-                                println("КОНЕЦ ПРОГРАММЫ!!!!!!!!")
-                                return@forEachLine
-                            }
-
-                            else -> {
-                                println("ВХОДНОЙ СИМВОЛ НЕ НРАВИТСЯ!!!!")
-                                return@forEachLine
-                            }
+                            return
+                        }
+                        else -> {
+                            println("⚠️ Входной символ вне словаря ⚠️")
+                            return
                         }
                     }
-
-                    'S' -> {
-                        when (symbol) {
-                            'l' -> {
-                                state = 'E'
+                }
+                'S' -> {
+                    when (symbol) {
+                        'l' -> state = 'E'
+                        'r' -> state = 'W'
+                        'f' -> println("MoveSouth ⬇️")
+                        Char(9500) -> {
+                            println("⛔️ Конец программы ⛔️")
+                            if (i < line.lastIndex) {
+                                println("⚠️ Предупреждение: после символа конца строки есть лишние символы! ⚠️")
                             }
-
-                            'r' -> {
-                                state = 'W'
-                            }
-
-                            'f' -> {
-                                println("MoveSouth")
-                            }
-
-                            Char(9500) -> {
-                                println("КОНЕЦ ПРОГРАММЫ!!!!!!!!")
-                                return@forEachLine
-                            }
-
-                            else -> {
-                                println("ВХОДНОЙ СИМВОЛ НЕ НРАВИТСЯ!!!!")
-                                return@forEachLine
-                            }
+                            return
+                        }
+                        else -> {
+                            println("⚠️ Входной символ вне словаря ⚠️")
+                            return
                         }
                     }
-
-                    'E' -> {
-                        when (symbol) {
-                            'l' -> {
-                                state = 'N'
+                }
+                'E' -> {
+                    when (symbol) {
+                        'l' -> state = 'N'
+                        'r' -> state = 'S'
+                        'f' -> println("MoveEast ➡️")
+                        Char(9500) -> {
+                            println("⛔️ Конец программы ⛔️")
+                            if (i < line.lastIndex) {
+                                println("⚠️ Предупреждение: после символа конца строки есть лишние символы! ⚠️")
                             }
-
-                            'r' -> {
-                                state = 'S'
-                            }
-
-                            'f' -> {
-                                println("MoveEast")
-                            }
-
-                            Char(9500) -> {
-                                println("КОНЕЦ ПРОГРАММЫ!!!!!!!!")
-                                return@forEachLine
-                            }
-
-                            else -> {
-                                println("ВХОДНОЙ СИМВОЛ НЕ НРАВИТСЯ!!!!")
-                                return@forEachLine
-                            }
+                            return
+                        }
+                        else -> {
+                            println("⚠️ Входной символ вне словаря ⚠️")
+                            return
                         }
                     }
                 }
             }
         }
+    }
 
-    println("ЗАВЕРШАЕМ ПРОГРАММУ")
-
+    println("🚨🚨🚨 Программа была завершена некорректно! Символ конца строки не был введен! 🚨🚨🚨")
 }
